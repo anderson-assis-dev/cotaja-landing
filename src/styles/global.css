@@ -1,0 +1,109 @@
+:root {
+  --p1: #5B6BE8;
+  --p2: #8B5CF6;
+  --grad: linear-gradient(135deg, #5B6BE8 0%, #8B5CF6 100%);
+  --green: #10B981;
+  --bg: #06070F;
+  --surface: #0E1018;
+  --card: #12151F;
+  --card2: #181C2A;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-p: rgba(91, 107, 232, 0.25);
+  --text: #F4F6FF;
+  --muted: #8892A4;
+  --muted2: #6B7280;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradient text utility */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section eyebrow */
+.s-eye {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--p1);
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Section title */
+.s-title {
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+/* Section subtitle */
+.s-sub {
+  color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.7;
+}

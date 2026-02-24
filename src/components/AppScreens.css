@@ -1,0 +1,212 @@
+.screens {
+  padding: 100px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.screens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.screens-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.feat-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.feat-row:hover {
+  background: rgba(91, 107, 232, 0.05);
+  border-color: var(--border-p);
+}
+
+.feat-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: rgba(91, 107, 232, 0.1);
+}
+
+.feat-txt h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.feat-txt p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Dashboard */
+.dash-card {
+  background: var(--card);
+  border: 1px solid var(--border-p);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+}
+
+.dash-top {
+  background: var(--grad);
+  padding: 20px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dt-lbl {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dt-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-top: 6px;
+}
+
+.dt-badge {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.dash-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dlbl {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.dbids {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dbid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 14px;
+  transition: all 0.2s;
+}
+
+.dbid:hover {
+  border-color: var(--border-p);
+}
+
+.dbid-l {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dbid-av {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #fff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.dbid-name {
+  font-size: 0.73rem;
+  font-weight: 600;
+}
+
+.dbid-sub {
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+.dbid-price {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.dbid-prazo {
+  font-size: 0.58rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.winner {
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--green);
+  margin-top: 3px;
+  display: inline-block;
+}
+
+.dash-btn {
+  background: var(--grad);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: opacity 0.2s;
+}
+
+.dash-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  .screens-grid {
+    grid-template-columns: 1fr;
+  }
+}
