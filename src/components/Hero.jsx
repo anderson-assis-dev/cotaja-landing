@@ -1,4 +1,5 @@
 import React from 'react';
+import { Plus, ClipboardList, Scale, Star, Clock, Zap, CheckCircle, Bell } from 'lucide-react';
 import './Hero.css';
 
 function AppleIcon() {
@@ -11,8 +12,11 @@ function AppleIcon() {
 
 function PlayIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-      <path d="M3.18 23.76c.3.17.64.24.99.2l12.37-12.37-2.63-2.63L3.18 23.76zm17.62-10.09L17.97 12l2.83-1.67-7.2-12.08A.98.98 0 0012.7 0l-8.7 21.79 2.83-2.83 14-5.29zm.8-3.54L19.26 9l.34.2L21.6 10c.45.27.72.77.72 1.3s-.27 1.03-.72 1.3l-1.7 1-.35.2 1.05.61zM5.93.23A.98.98 0 004.7.04L3.18.92l10.73 10.73 2.63-2.63L5.93.23z" />
+    <svg viewBox="0 0 24 24" width="24" height="24">
+      <path d="M2 2 L12 7 L12 12 L2 12 Z" fill="#4285F4"/>
+      <path d="M2 12 L12 12 L12 17 L2 22 Z" fill="#34A853"/>
+      <path d="M12 7 L22 12 L12 12 Z" fill="#FBBC04"/>
+      <path d="M12 12 L22 12 L12 17 Z" fill="#EA4335"/>
     </svg>
   );
 }
@@ -65,18 +69,18 @@ function PhoneMockup() {
 
         {/* Header */}
         <div className="ps-header">
-          <span className="ps-title">CotaJá</span>
-          <span className="ps-chip">● IA Ativa</span>
+          <span className="ps-title">Olá, Anderson!</span>
+          <span className="ps-subtitle">Como podemos ajudar você hoje?</span>
         </div>
 
         {/* Body */}
         <div className="ps-body">
           {/* Notification */}
           <div className="pnotif">
-            <span style={{ fontSize: '0.9rem' }}>🎉</span>
+            <Bell size={14} strokeWidth={1.5} style={{ color: '#10b981', flexShrink: 0 }} />
             <div className="pnotif-t">
-              <strong>Proposta Aceita!</strong>
-              <span>Teste Serviço · R$ 150.000,00</span>
+              <strong>Nova Proposta Recebida!</strong>
+              <span>Limpeza de carro · R$ 420,00</span>
             </div>
           </div>
 
@@ -84,24 +88,24 @@ function PhoneMockup() {
 
           <div className="ps-grid">
             <div className="pgc">
-              <div className="pgc-ico">➕</div>
+              <div className="pgc-ico"><Plus size={14} strokeWidth={2} /></div>
               <strong>Criar Pedido</strong>
-              <span>Solicite um novo serviço</span>
+              <span>Solicite um serviço</span>
             </div>
             <div className="pgc">
-              <div className="pgc-ico">📋</div>
+              <div className="pgc-ico"><ClipboardList size={14} strokeWidth={1.5} /></div>
               <strong>Meus Pedidos</strong>
-              <span>Acompanhe seus pedidos</span>
+              <span>Acompanhe pedidos</span>
             </div>
             <div className="pgc">
-              <div className="pgc-ico" style={{ fontSize: '0.8rem' }}>⚖️</div>
-              <strong>Leilão em Andamento</strong>
-              <span>Veja propostas</span>
+              <div className="pgc-ico"><Scale size={14} strokeWidth={1.5} /></div>
+              <strong>Leilão Ativo</strong>
+              <span>Ver propostas</span>
             </div>
             <div className="pgc">
-              <div className="pgc-ico">⭐</div>
-              <strong>Avaliar Prestador</strong>
-              <span>Avalie serviços</span>
+              <div className="pgc-ico"><Star size={14} strokeWidth={1.5} /></div>
+              <strong>Avaliar</strong>
+              <span>Avalie prestadores</span>
             </div>
           </div>
 
@@ -109,29 +113,29 @@ function PhoneMockup() {
 
           <div className="pp">
             <div className="pp-l">
-              <div className="pp-av">AT</div>
+              <div className="pp-av">AG</div>
               <div>
-                <div className="pp-n">Andre Teste</div>
-                <div className="pp-s">Teste Serviço</div>
+                <div className="pp-n">Angela Assis</div>
+                <div className="pp-s">Limpeza de carro</div>
               </div>
             </div>
             <div>
-              <div className="pp-v">R$ 150.000</div>
-              <div className="pp-p">⏱ 10 dias</div>
+              <div className="pp-v">R$ 420,00</div>
+              <div className="pp-p"><Clock size={9} strokeWidth={1.5} /> 2 dias</div>
             </div>
           </div>
 
           <div className="pp">
             <div className="pp-l">
-              <div className="pp-av" style={{ background: 'linear-gradient(135deg,#8B5CF6,#5B6BE8)' }}>AN</div>
+              <div className="pp-av" style={{ background: 'linear-gradient(135deg,#818cf8,#4f46e5)' }}>CS</div>
               <div>
-                <div className="pp-n">Anderson</div>
-                <div className="pp-s">Teste Serviço</div>
+                <div className="pp-n">Carlos Silva</div>
+                <div className="pp-s">Limpeza de carro</div>
               </div>
             </div>
             <div>
-              <div className="pp-v">R$ 160.000</div>
-              <div className="pp-p">⏱ 12 dias</div>
+              <div className="pp-v">R$ 380,00</div>
+              <div className="pp-p"><Clock size={9} strokeWidth={1.5} /> 1 dia</div>
             </div>
           </div>
         </div>
@@ -195,14 +199,14 @@ function Hero() {
           <div className="phone-wrap">
             <PhoneMockup />
             <div className="float-card fc1">
-              <span className="fc-ico">⚡</span>
+              <span className="fc-ico"><Zap size={16} strokeWidth={1.5} /></span>
               <div className="fc-t">
                 <strong>IA Analisando</strong>
                 <span>Score 97/100</span>
               </div>
             </div>
             <div className="float-card fc2">
-              <span className="fc-ico">✅</span>
+              <span className="fc-ico"><CheckCircle size={16} strokeWidth={1.5} /></span>
               <div className="fc-t">
                 <strong>Proposta Aceita!</strong>
                 <span>R$ 150.000 confirmado</span>

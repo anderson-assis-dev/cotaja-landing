@@ -1,33 +1,34 @@
 import React from 'react';
+import { MessageCircle, Paperclip, Bell, Star, Check, Clock, ClipboardList } from 'lucide-react';
 import './AppScreens.css';
 
 const features = [
   {
-    icon: '📬',
+    icon: <MessageCircle size={20} strokeWidth={1.5} />,
     title: 'Chat Integrado',
     desc: 'Comunicação direta com o prestador dentro do pedido, com histórico, agendamento e informações organizadas em abas.',
   },
   {
-    icon: '📎',
+    icon: <Paperclip size={20} strokeWidth={1.5} />,
     title: 'Anexos e Documentos',
     desc: 'Envie imagens e arquivos diretamente no pedido para detalhar sua demanda e acelerar as propostas recebidas.',
   },
   {
-    icon: '🔔',
+    icon: <Bell size={20} strokeWidth={1.5} />,
     title: 'Notificações por E-mail',
     desc: 'Receba alertas imediatos quando sua proposta for aceita, com todos os detalhes do pedido e valor confirmado.',
   },
   {
-    icon: '⭐',
+    icon: <Star size={20} strokeWidth={1.5} />,
     title: 'Avaliação de Prestadores',
     desc: 'Avalie o serviço recebido e consulte o histórico de reputação de qualquer prestador antes de contratar.',
   },
 ];
 
 const bids = [
-  { initials: 'AT', name: 'Andre Teste', sub: '⭐ 4.9 · Score IA 97', price: 'R$ 150.000', prazo: '10 dias', winner: true, color: 'var(--grad)' },
-  { initials: 'AN', name: 'Anderson', sub: '⭐ 4.7 · Score IA 91', price: 'R$ 160.000', prazo: '12 dias', winner: false, color: 'linear-gradient(135deg,#8B5CF6,#5B6BE8)' },
-  { initials: 'CL', name: 'CleanPro SP', sub: '⭐ 4.5 · Score IA 85', price: 'R$ 175.000', prazo: '15 dias', winner: false, color: 'linear-gradient(135deg,#10B981,#059669)' },
+  { initials: 'AT', name: 'Andre Teste', rating: '4.9', score: '97', price: 'R$ 150.000', prazo: '10 dias', winner: true, color: 'var(--grad)' },
+  { initials: 'AN', name: 'Anderson', rating: '4.7', score: '91', price: 'R$ 160.000', prazo: '12 dias', winner: false, color: 'linear-gradient(135deg,#8B5CF6,#5B6BE8)' },
+  { initials: 'CL', name: 'CleanPro SP', rating: '4.5', score: '85', price: 'R$ 175.000', prazo: '15 dias', winner: false, color: 'linear-gradient(135deg,#10B981,#059669)' },
 ];
 
 function AppScreens() {
@@ -75,18 +76,18 @@ function AppScreens() {
                         <div className="dbid-av" style={{ background: b.color }}>{b.initials}</div>
                         <div>
                           <div className="dbid-name">{b.name}</div>
-                          <div className="dbid-sub">{b.sub}</div>
-                          {b.winner && <div className="winner">✓ Melhor proposta</div>}
+                          <div className="dbid-sub"><Star size={9} fill="#f59e0b" color="#f59e0b" /> {b.rating} · Score IA {b.score}</div>
+                          {b.winner && <div className="winner"><Check size={9} strokeWidth={2.5} /> Melhor proposta</div>}
                         </div>
                       </div>
                       <div>
                         <div className="dbid-price">{b.price}</div>
-                        <div className="dbid-prazo">⏱ {b.prazo}</div>
+                        <div className="dbid-prazo"><Clock size={10} strokeWidth={1.5} /> {b.prazo}</div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="dash-btn">📋 Gerenciar Pedido →</div>
+                <div className="dash-btn"><ClipboardList size={14} strokeWidth={1.5} /> Gerenciar Pedido →</div>
               </div>
             </div>
           </div>

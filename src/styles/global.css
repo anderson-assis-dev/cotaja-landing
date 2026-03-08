@@ -1,7 +1,7 @@
 :root {
-  --p1: #5B6BE8;
-  --p2: #8B5CF6;
-  --grad: linear-gradient(135deg, #5B6BE8 0%, #8B5CF6 100%);
+  --p1: #4f46e5;
+  --p2: #818cf8;
+  --grad: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
   --green: #10B981;
   --bg: #06070F;
   --surface: #0E1018;

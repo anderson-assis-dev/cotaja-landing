@@ -41,8 +41,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
   background: rgba(91, 107, 232, 0.1);
+  color: var(--p1);
 }
 
 .feat-txt h4 {
@@ -175,6 +175,10 @@
   font-size: 0.58rem;
   color: var(--muted);
   text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
 }
 
 .winner {
@@ -185,13 +189,18 @@
   background: rgba(16, 185, 129, 0.15);
   color: var(--green);
   margin-top: 3px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .dash-btn {
   background: var(--grad);
   color: #fff;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   padding: 12px;
   border-radius: 12px;
   font-size: 0.82rem;

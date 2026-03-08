@@ -1,22 +1,23 @@
 import React from 'react';
+import { FileText, Zap, Handshake } from 'lucide-react';
 import './HowItWorks.css';
 
 const steps = [
   {
     num: '01',
-    icon: '📋',
+    icon: <FileText size={24} strokeWidth={1.5} />,
     title: 'Crie seu pedido',
     desc: 'Descreva o serviço, defina orçamento, prazo e localização. Nossa IA ajuda a montar um briefing completo para atrair os melhores fornecedores.',
   },
   {
     num: '02',
-    icon: '⚡',
+    icon: <Zap size={24} strokeWidth={1.5} />,
     title: 'Receba propostas',
     desc: 'Prestadores qualificados competem pelo seu projeto via leilão reverso. A IA classifica e filtra as melhores propostas automaticamente.',
   },
   {
     num: '03',
-    icon: '🤝',
+    icon: <Handshake size={24} strokeWidth={1.5} />,
     title: 'Contrate com segurança',
     desc: 'Aceite a proposta ideal, comunique-se via chat integrado, acompanhe o andamento e pague com proteção garantida pela plataforma.',
   },

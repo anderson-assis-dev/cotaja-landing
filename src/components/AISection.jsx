@@ -1,11 +1,12 @@
 import React from 'react';
+import { BarChart3, MessageSquare, ShieldAlert, Target } from 'lucide-react';
 import './AISection.css';
 
 const cards = [
-  { icon: '🧠', title: 'Score de Fornecedores', desc: 'Avaliação automática baseada em histórico, capacidade técnica, pontualidade e satisfação de clientes anteriores.' },
-  { icon: '💬', title: 'Assistente de Especificação', desc: 'IA conversacional que auxilia na criação de briefings completos e precisos para atrair as melhores propostas.' },
-  { icon: '🔍', title: 'Detecção de Anomalias', desc: 'Identifica propostas suspeitas e preços fora do padrão de mercado antes que cheguem até você.' },
-  { icon: '🎯', title: 'Matching Preditivo', desc: 'Notifica proativamente os prestadores mais adequados para o seu perfil de demanda automaticamente.' },
+  { icon: <BarChart3 size={22} strokeWidth={1.5} />, title: 'Score de Fornecedores', desc: 'Avaliação automática baseada em histórico, capacidade técnica, pontualidade e satisfação de clientes anteriores.' },
+  { icon: <MessageSquare size={22} strokeWidth={1.5} />, title: 'Assistente de Especificação', desc: 'IA conversacional que auxilia na criação de briefings completos e precisos para atrair as melhores propostas.' },
+  { icon: <ShieldAlert size={22} strokeWidth={1.5} />, title: 'Detecção de Anomalias', desc: 'Identifica propostas suspeitas e preços fora do padrão de mercado antes que cheguem até você.' },
+  { icon: <Target size={22} strokeWidth={1.5} />, title: 'Matching Preditivo', desc: 'Notifica proativamente os prestadores mais adequados para o seu perfil de demanda automaticamente.' },
 ];
 
 const scoreItems = [
