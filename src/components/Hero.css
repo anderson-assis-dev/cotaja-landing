@@ -108,6 +108,7 @@
   justify-content: center;
   position: relative;
   animation: fadeUp 0.7s 0.2s ease both;
+  padding: 0 70px;
 }
 
 .glow-ring {
@@ -378,13 +379,13 @@
 }
 
 .fc1 {
-  right: -50px;
+  right: -65px;
   top: 80px;
   animation: float1 4s ease-in-out infinite;
 }
 
 .fc2 {
-  left: -55px;
+  left: -65px;
   bottom: 110px;
   animation: float2 5s ease-in-out infinite;
 }
