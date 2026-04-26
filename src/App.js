@@ -8,6 +8,8 @@ import DualCTA from './components/DualCTA';
 import Footer from './components/Footer';
 import SearchResults from './components/SearchResults';
 import ProviderRegister from './components/ProviderRegister';
+import TermsOfUse from './components/TermsOfUse';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import './styles/global.css';
 
 function Home() {
@@ -51,6 +53,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/buscar" element={<SearchResults />} />
           <Route path="/cadastro/prestador" element={<ProviderRegister />} />
+          <Route path="/termos" element={<TermsOfUse />} />
+          <Route path="/privacidade" element={<PrivacyPolicy />} />
         </Routes>
       </main>
       <Footer />

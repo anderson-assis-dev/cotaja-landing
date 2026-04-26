@@ -12,7 +12,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'https://app.cotaja.io';
 const BENEFITS = [
   { icon: <DollarSign size={22} />, title: 'Renda extra garantida', desc: 'Receba propostas de clientes próximos a você e aumente seu faturamento.' },
   { icon: <Users size={22} />, title: 'Base de clientes crescente', desc: 'Nossa plataforma conecta você a quem já está buscando o que você oferece.' },
-  { icon: <Shield size={22} />, title: 'Pagamentos protegidos', desc: 'O valor fica reservado até a conclusão do serviço.' },
+  { icon: <Shield size={22} />, title: 'Pagamentos diretos', desc: 'Você negocia e recebe diretamente do cliente, sem intermediação financeira.' },
   { icon: <TrendingUp size={22} />, title: 'Reputação que vende', desc: 'Avaliações verificadas constroem sua credibilidade.' },
   { icon: <Smartphone size={22} />, title: 'Tudo pelo app', desc: 'Gerencie propostas e pagamentos pelo celular onde quiser.' },
   { icon: <Clock size={22} />, title: 'Sem custo obrigatório', desc: 'O uso é gratuito. O plano premium é opcional para quem quer mais destaque e recursos.' },
@@ -27,7 +27,7 @@ const STEPS = [
 const FAQS = [
   { q: 'É gratuito se cadastrar?', a: 'Sim! O cadastro é totalmente gratuito. Não cobramos comissão. Existe um plano premium opcional para quem quer mais benefícios.' },
   { q: 'Que tipos de serviços posso oferecer?', a: 'Diversas categorias: limpeza, reparos, reformas, elétrica, hidráulica, pintura, jardinagem, tecnologia, e muito mais.' },
-  { q: 'Como recebo pelos serviços realizados?', a: 'O pagamento fica retido e é liberado após a confirmação de conclusão. Você recebe direto na sua conta bancária.' },
+  { q: 'Como recebo pelos serviços realizados?', a: 'O pagamento é acordado diretamente com o cliente — prazo, forma e valor são definidos entre vocês. O CotaJá conecta as partes, mas não intermedia o pagamento.' },
   { q: 'Posso trabalhar em mais de uma cidade?', a: 'Sim. Você define sua área de atendimento e pode ampliar ou reduzir conforme sua disponibilidade.' },
   { q: 'Como funciona o sistema de avaliações?', a: 'Após cada serviço, o cliente avalia você. Avaliações positivas aumentam sua visibilidade na plataforma.' },
 ];

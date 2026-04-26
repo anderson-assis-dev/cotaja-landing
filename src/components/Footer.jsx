@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 import { getAppUrl } from '../utils/appLinks';
 
@@ -46,8 +47,8 @@ function Footer() {
         <div className="footer-col">
           <h4>Empresa</h4>
           <a href="#sobre">Sobre nós</a>
-          <a href="#termos">Termos de uso</a>
-          <a href="#privacidade">Privacidade</a>
+          <Link to="/termos">Termos de uso</Link>
+          <Link to="/privacidade">Privacidade</Link>
           <a href="#contato">Contato</a>
         </div>
       </div>
