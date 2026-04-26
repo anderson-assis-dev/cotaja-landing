@@ -146,6 +146,7 @@ function RegisterModal({ open, onClose, initialEmail }) {
         email: form.email,
         phone: form.phone.replaceAll(/\D/g, ''),
         password: form.password,
+        password_confirmation: form.confirmPassword,
         profile_type: 'provider',
         cpf: form.cpf.replaceAll(/\D/g, '') || undefined,
         mother_name: form.mother_name,
@@ -159,7 +160,7 @@ function RegisterModal({ open, onClose, initialEmail }) {
       });
       const json = await res.json();
       if (json.success) {
-        setResult({ ok: true, msg: 'Conta criada com sucesso! Baixe o app para acessar sua conta de prestador.' });
+        setResult({ ok: true, msg: json.message });
         setForm(EMPTY_FORM);
         setSelectedCats([]);
       } else {
