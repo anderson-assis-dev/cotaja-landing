@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Search, Star, ArrowLeft, X, Briefcase, CheckCircle2, Zap } from 'lucide-react';
+import { Search, Star, ArrowLeft, X, Briefcase, CheckCircle2, Zap, MapPin, Loader2 } from 'lucide-react';
 import './SearchResults.css';
 import { getAppUrl } from '../utils/appLinks';
 
@@ -142,6 +142,8 @@ function ProviderModal({ open, onClose, provider, details, loading }) {
 export default function SearchResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
+  const [cityInput, setCityInput] = useState(searchParams.get('city') || '');
+  const [locating, setLocating] = useState(false);
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -149,11 +151,12 @@ export default function SearchResults() {
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [providerDetails, setProviderDetails] = useState(null);
 
-  const fetchProviders = useCallback(async (q) => {
+  const fetchProviders = useCallback(async (q, city) => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
       if (q) params.set('q', q);
+      if (city) params.set('city', city);
       const res = await fetch(`${API_URL}/api/providers/search?${params}`);
       const json = await res.json();
       setProviders(json.success ? json.data : []);
@@ -165,12 +168,50 @@ export default function SearchResults() {
   }, []);
 
   useEffect(() => {
-    fetchProviders(searchParams.get('q') || '');
+    fetchProviders(searchParams.get('q') || '', searchParams.get('city') || '');
   }, [searchParams, fetchProviders]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchParams(query ? { q: query } : {});
+    const next = {};
+    if (query) next.q = query;
+    if (cityInput.trim()) next.city = cityInput.trim();
+    setSearchParams(next);
+  };
+
+  const handleUseLocation = () => {
+    if (!navigator.geolocation) return;
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      async ({ coords }) => {
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${coords.latitude}&lon=${coords.longitude}&format=json&accept-language=pt-BR`,
+            { headers: { 'User-Agent': 'cotaja.io/search' } }
+          );
+          const data = await res.json();
+          const city = data.address?.city || data.address?.town || data.address?.village || data.address?.county || '';
+          setCityInput(city);
+          const next = {};
+          if (searchParams.get('q')) next.q = searchParams.get('q');
+          if (city) next.city = city;
+          setSearchParams(next);
+        } catch {
+          // silently fail — user can type city manually
+        } finally {
+          setLocating(false);
+        }
+      },
+      () => setLocating(false),
+      { timeout: 8000 }
+    );
+  };
+
+  const clearCity = () => {
+    setCityInput('');
+    const next = {};
+    if (searchParams.get('q')) next.q = searchParams.get('q');
+    setSearchParams(next);
   };
 
   const q = searchParams.get('q') || '';
@@ -225,8 +266,38 @@ export default function SearchResults() {
           {!loading && (
             <div className="sr-meta-sub">
               {providers.length} prestador{providers.length !== 1 ? 'es' : ''} encontrado{providers.length !== 1 ? 's' : ''}
+              {searchParams.get('city') && ` em ${searchParams.get('city')}`}
             </div>
           )}
+        </div>
+
+        <div className="sr-city-filter">
+          <div className="sr-city-input-wrap">
+            <MapPin size={15} className="sr-city-icon" />
+            <input
+              type="text"
+              className="sr-city-input"
+              placeholder="Filtrar por cidade..."
+              value={cityInput}
+              onChange={(e) => setCityInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
+            />
+            {cityInput && (
+              <button type="button" className="sr-city-clear" onClick={clearCity} aria-label="Limpar cidade">
+                <X size={13} />
+              </button>
+            )}
+          </div>
+          <button
+            type="button"
+            className={`sr-locate-btn${locating ? ' loading' : ''}`}
+            onClick={handleUseLocation}
+            disabled={locating}
+            title="Usar minha localização"
+          >
+            {locating ? <Loader2 size={15} className="sr-spin" /> : <MapPin size={15} />}
+            {locating ? 'Localizando...' : 'Usar localização'}
+          </button>
         </div>
 
         {loading && (
