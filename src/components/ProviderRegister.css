@@ -526,6 +526,32 @@
 }
 
 /* ── Category chips ──────────────────────────── */
+.pr-cat-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pr-cat-search-wrap input {
+  margin-bottom: 0;
+}
+
+.pr-cat-add-btn {
+  align-self: flex-start;
+  background: #eef2ff;
+  border: 1.5px dashed var(--p1);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--p1);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.pr-cat-add-btn:hover { background: #e0e7ff; }
+
 .pr-cats-selected {
   display: flex;
   flex-wrap: wrap;

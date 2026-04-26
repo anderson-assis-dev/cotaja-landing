@@ -15,7 +15,7 @@ const BENEFITS = [
   { icon: <Shield size={22} />, title: 'Pagamentos protegidos', desc: 'O valor fica reservado até a conclusão do serviço.' },
   { icon: <TrendingUp size={22} />, title: 'Reputação que vende', desc: 'Avaliações verificadas constroem sua credibilidade.' },
   { icon: <Smartphone size={22} />, title: 'Tudo pelo app', desc: 'Gerencie propostas e pagamentos pelo celular onde quiser.' },
-  { icon: <Clock size={22} />, title: 'Sem mensalidade', desc: 'Você só paga quando fecha um negócio. Sem cobranças fixas.' },
+  { icon: <Clock size={22} />, title: 'Sem custo obrigatório', desc: 'O uso é gratuito. O plano premium é opcional para quem quer mais destaque e recursos.' },
 ];
 
 const STEPS = [
@@ -25,7 +25,7 @@ const STEPS = [
 ];
 
 const FAQS = [
-  { q: 'É gratuito se cadastrar?', a: 'Sim! O cadastro é totalmente gratuito. Cobramos apenas uma pequena comissão quando você fecha um negócio.' },
+  { q: 'É gratuito se cadastrar?', a: 'Sim! O cadastro é totalmente gratuito. Não cobramos comissão. Existe um plano premium opcional para quem quer mais benefícios.' },
   { q: 'Que tipos de serviços posso oferecer?', a: 'Diversas categorias: limpeza, reparos, reformas, elétrica, hidráulica, pintura, jardinagem, tecnologia, e muito mais.' },
   { q: 'Como recebo pelos serviços realizados?', a: 'O pagamento fica retido e é liberado após a confirmação de conclusão. Você recebe direto na sua conta bancária.' },
   { q: 'Posso trabalhar em mais de uma cidade?', a: 'Sim. Você define sua área de atendimento e pode ampliar ou reduzir conforme sua disponibilidade.' },
@@ -105,10 +105,10 @@ function RegisterModal({ open, onClose, initialEmail }) {
     if (open) {
       if (!dialog.open) dialog.showModal();
       document.body.style.overflow = 'hidden';
-    } else {
-      if (dialog.open) dialog.close();
-      document.body.style.overflow = '';
+      return () => { document.body.style.overflow = ''; };
     }
+    if (dialog.open) dialog.close();
+    document.body.style.overflow = '';
   }, [open]);
 
   useEffect(() => {
@@ -260,9 +260,37 @@ function RegisterModal({ open, onClose, initialEmail }) {
 
             <div className="pr-field" style={{ marginTop: 4 }}>
               <label htmlFor="pr-cat-search">Categorias de serviço</label>
-              <input id="pr-cat-search" type="text" placeholder="Buscar categorias..."
-                value={catSearch} onChange={e => setCatSearch(e.target.value)}
-                style={{ marginBottom: 8 }} />
+              <div className="pr-cat-search-wrap">
+                <input id="pr-cat-search" type="text" placeholder="Buscar ou digitar nova categoria..."
+                  value={catSearch}
+                  onChange={e => setCatSearch(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      const val = catSearch.trim();
+                      if (val && !selectedCats.includes(val)) {
+                        setSelectedCats(prev => [...prev, val]);
+                        setCatSearch('');
+                      }
+                    }
+                  }}
+                />
+                {catSearch.trim() && !categories.some(c => c.toLowerCase() === catSearch.trim().toLowerCase()) && (
+                  <button
+                    type="button"
+                    className="pr-cat-add-btn"
+                    onClick={() => {
+                      const val = catSearch.trim();
+                      if (val && !selectedCats.includes(val)) {
+                        setSelectedCats(prev => [...prev, val]);
+                        setCatSearch('');
+                      }
+                    }}
+                  >
+                    + Adicionar "{catSearch.trim()}"
+                  </button>
+                )}
+              </div>
               {selectedCats.length > 0 && (
                 <div className="pr-cats-selected">
                   {selectedCats.map(c => (

@@ -2,14 +2,6 @@ import React from 'react';
 import './Footer.css';
 import { getAppUrl } from '../utils/appLinks';
 
-function BoltIcon() {
-  return (
-    <svg viewBox="0 0 18 22" fill="none" width="14" height="18">
-      <path d="M10.5 1L2 13H9L7.5 21L16 9H9.5L10.5 1Z" fill="#fff" stroke="rgba(255,255,255,.3)" strokeWidth=".5" />
-    </svg>
-  );
-}
-
 const socials = [
   {
     name: 'Instagram', href: 'https://www.instagram.com/reels/DUi9bWsDt4c/', color: '#E1306C',
@@ -36,8 +28,7 @@ function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <div className="footer-logo">
-            <div className="footer-logo-icon"><BoltIcon /></div>
-            <span className="footer-logo-text">CotaJá</span>
+            <img className="footer-logo-img" src="/cotaja-logo.png" alt="CotaJá" />
           </div>
           <p className="footer-desc">
             Marketplace de serviços que conecta clientes a prestadores qualificados via leilão reverso.
