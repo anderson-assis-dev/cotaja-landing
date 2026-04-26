@@ -1,47 +1,52 @@
 import React from 'react';
-import { FileText, Zap, Handshake } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import './HowItWorks.css';
+import { getAppUrl } from '../utils/appLinks';
 
-const steps = [
+const STEPS = [
   {
-    num: '01',
-    icon: <FileText size={24} strokeWidth={1.5} />,
-    title: 'Crie seu pedido',
-    desc: 'Descreva o serviço, defina orçamento, prazo e localização. Nossa IA ajuda a montar um briefing completo para atrair os melhores fornecedores.',
+    n: '1',
+    title: 'Descreva o serviço',
+    desc: 'Diga o que você precisa em poucos segundos — sem formulários complicados.',
   },
   {
-    num: '02',
-    icon: <Zap size={24} strokeWidth={1.5} />,
+    n: '2',
     title: 'Receba propostas',
-    desc: 'Prestadores qualificados competem pelo seu projeto via leilão reverso. A IA classifica e filtra as melhores propostas automaticamente.',
+    desc: 'Prestadores verificados enviam orçamentos. Nossa IA analisa e classifica as melhores.',
   },
   {
-    num: '03',
-    icon: <Handshake size={24} strokeWidth={1.5} />,
+    n: '3',
     title: 'Contrate com segurança',
-    desc: 'Aceite a proposta ideal, comunique-se via chat integrado, acompanhe o andamento e pague com proteção garantida pela plataforma.',
+    desc: 'Escolha o profissional ideal, combine os detalhes e pague com proteção total.',
   },
 ];
 
 function HowItWorks() {
+  const appUrl=getAppUrl();
   return (
-    <section className="how" id="como-funciona">
-      <div className="container">
-        <div className="how-head reveal">
-          <span className="s-eye">Processo simplificado</span>
-          <h2 className="s-title">Contrate em 3 passos</h2>
-          <p className="s-sub">Do pedido à contratação — rápido, transparente e inteligente.</p>
+    <section className="how reveal" id="como-funciona">
+      <div className="how-inner">
+        <div className="how-head">
+          <span className="s-eye">Como funciona</span>
+          <h2 className="s-title">Simples, rápido e seguro</h2>
+          <p className="s-sub">Em 3 passos você já tem profissionais prontos para te ajudar.</p>
         </div>
 
-        <div className="steps reveal">
-          {steps.map((step, i) => (
-            <div key={i} className="step">
-              <div className="step-n">{step.num}</div>
-              <div className="step-ico">{step.icon}</div>
-              <h3>{step.title}</h3>
-              <p>{step.desc}</p>
+        <div className="how-steps">
+          {STEPS.map((s) => (
+            <div key={s.n} className="how-step">
+              <div className="how-num">{s.n}</div>
+              <div className="how-step-title">{s.title}</div>
+              <p className="how-step-desc">{s.desc}</p>
             </div>
           ))}
+        </div>
+
+        <div className="how-cta">
+          <a href={appUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+            <Zap size={16} />
+            Solicitar serviço agora
+          </a>
         </div>
       </div>
     </section>

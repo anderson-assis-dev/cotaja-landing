@@ -1,53 +1,60 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
+import Categories from './components/Categories';
 import HowItWorks from './components/HowItWorks';
-import AppScreens from './components/AppScreens';
-import AISection from './components/AISection';
-import EmailSection from './components/EmailSection';
-import CTA from './components/CTA';
+import DualCTA from './components/DualCTA';
 import Footer from './components/Footer';
-import BgCanvas from './components/BgCanvas';
+import SearchResults from './components/SearchResults';
+import ProviderRegister from './components/ProviderRegister';
+import './styles/global.css';
 
-function App() {
-  // Scroll reveal effect
+function Home() {
   useEffect(() => {
+    function onEntry(entry, i) {
+      if (!entry.isIntersecting) return;
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, i) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('visible');
-            }, i * 100);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
+      (entries) => entries.forEach((e, i) => onEntry(e, i)),
       { threshold: 0.1 }
     );
-
-    const revealEls = document.querySelectorAll('.reveal');
-    revealEls.forEach((el) => observer.observe(el));
-
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   return (
     <>
-      <BgCanvas />
+      <Hero />
+      <Categories />
+      <HowItWorks />
+      <DualCTA />
+    </>
+  );
+}
+
+function ScrollToTop(){
+  const { pathname, search }=useLocation();
+  useEffect(()=>{window.scrollTo(0,0);},[pathname,search]);
+  return null;
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
       <Navbar />
       <main>
-        <Hero />
-        <Stats />
-        <HowItWorks />
-        <AppScreens />
-        <AISection />
-        <EmailSection />
-        <CTA />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/buscar" element={<SearchResults />} />
+          <Route path="/cadastro/prestador" element={<ProviderRegister />} />
+        </Routes>
       </main>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
