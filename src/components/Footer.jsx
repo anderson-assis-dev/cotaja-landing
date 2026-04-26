@@ -29,7 +29,7 @@ function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <div className="footer-logo">
-            <img className="footer-logo-img" src="/cotaja-logo.png" alt="CotaJá" />
+            <img className="footer-logo-img" src="/assets/images/cotaja.png" alt="CotaJá" />
           </div>
           <p className="footer-desc">
             Marketplace de serviços que conecta clientes a prestadores qualificados via leilão reverso.
