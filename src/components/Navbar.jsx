@@ -8,7 +8,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="nav-inner">
         <a href="/" className="logo">
-          <img className="logo-img" src="/assets/images/cotaja.png" alt="CotaJá" />
+          <img className="logo-img" src="/assets/images/cotaja-logo.png" alt="CotaJá" />
         </a>
 
         <ul className="nav-links">
