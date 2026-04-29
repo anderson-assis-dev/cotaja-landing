@@ -1,48 +1,51 @@
 import React, { useState, useRef } from 'react';
-import { Check, DollarSign, Users, Zap, ArrowRight, Smartphone, ShoppingBag, Crown } from 'lucide-react';
+import { Check, ArrowRight, Smartphone, ShoppingBag, Crown, TrendingUp, Users, DollarSign, Zap, Star } from 'lucide-react';
 import './Affiliate.css';
 
 const API = process.env.REACT_APP_API_URL || 'https://api.cotaja.com.br/api';
 
 const COMMISSIONS = [
   {
-    icon: <Smartphone size={28} />,
-    event: 'Instalação + cadastro completo',
-    value: 'R$ 1,00',
-    desc: 'Por cada pessoa que baixar o app e completar o perfil pelo seu link.',
+    icon: <Smartphone size={32} />,
+    label: 'Instalação validada',
+    value: 'R$ 1',
+    cents: ',00',
+    desc: 'Cadastro completo pelo seu link',
     color: '#4f46e5',
-    bg: '#eef2ff',
+    grad: 'linear-gradient(135deg, #4f46e5 0%, #818cf8 100%)',
   },
   {
-    icon: <ShoppingBag size={28} />,
-    event: 'Primeiro pedido aberto',
-    value: 'R$ 3,00',
-    desc: 'Quando o cliente indicado criar o primeiro pedido de serviço.',
+    icon: <ShoppingBag size={32} />,
+    label: 'Primeiro pedido',
+    value: 'R$ 3',
+    cents: ',00',
+    desc: 'Cliente indicado abre o 1º pedido',
     color: '#0891b2',
-    bg: '#ecfeff',
+    grad: 'linear-gradient(135deg, #0891b2 0%, #22d3ee 100%)',
     featured: true,
   },
   {
-    icon: <Crown size={28} />,
-    event: 'Prestador vira Premium',
-    value: 'R$ 5,00',
-    desc: 'Quando um prestador que você indicou assinar o plano Premium.',
+    icon: <Crown size={32} />,
+    label: 'Prestador Premium',
+    value: 'R$ 5',
+    cents: ',00',
+    desc: 'Prestador indicado assina o Premium',
     color: '#d97706',
-    bg: '#fffbeb',
+    grad: 'linear-gradient(135deg, #d97706 0%, #fbbf24 100%)',
   },
 ];
 
-const HOW_STEPS = [
-  { n: '1', title: 'Inscreva-se', desc: 'Preencha o formulário abaixo e escolha seu código exclusivo.' },
-  { n: '2', title: 'Receba seu link', desc: 'Assim que aprovado, você recebe seu link personalizado para divulgar.' },
-  { n: '3', title: 'Indique e ganhe', desc: 'Compartilhe nas redes, grupos e para conhecidos. Cada conversão gera comissão.' },
+const STEPS = [
+  { n: '01', icon: <Users size={22} />, title: 'Inscreva-se grátis', desc: 'Preencha o formulário e escolha seu código exclusivo. Aprovação em até 2 dias úteis.' },
+  { n: '02', icon: <Zap size={22} />, title: 'Receba seu link', desc: 'Link personalizado + painel para acompanhar seus cliques, conversões e saldo em tempo real.' },
+  { n: '03', icon: <DollarSign size={22} />, title: 'Indique e saque', desc: 'Compartilhe nas redes, grupos e stories. Saque via Pix assim que atingir R$ 20,00.' },
 ];
 
 const FAQS = [
-  { q: 'Quando recebo o pagamento?', a: 'Pagamentos são processados mensalmente, assim que o saldo aprovado atingir R$ 20,00.' },
-  { q: 'Como é feito o pagamento?', a: 'Via Pix para a chave cadastrada. Simples e rápido.' },
-  { q: 'Posso ser afiliado sem ser usuário do app?', a: 'Sim! Criadores de conteúdo, influenciadores e qualquer pessoa pode se inscrever.' },
-  { q: 'Tem limite de indicações?', a: 'Não. Quanto mais você indica, mais você ganha — sem teto de comissões.' },
+  { q: 'Quando recebo o pagamento?', a: 'Pagamentos são processados mensalmente via Pix, com saldo mínimo de R$ 20,00.' },
+  { q: 'Tem limite de indicações?', a: 'Zero limite. Quanto mais você indica, mais você ganha — sem teto.' },
+  { q: 'Preciso ser usuário do app?', a: 'Não. Criadores de conteúdo e qualquer pessoa pode se inscrever como afiliado.' },
+  { q: 'Os eventos são acumuláveis?', a: 'Sim! Uma única indicação pode gerar os 3 eventos — até R$ 9,00 por usuário.' },
 ];
 
 function slugify(str) {
@@ -53,19 +56,21 @@ function slugify(str) {
     .replace(/[^a-z0-9]/g, '');
 }
 
-function Affiliate() {
+export default function Affiliate() {
   const [form, setForm] = useState({ name: '', email: '', instagram: '', code: '' });
-  const [codeStatus, setCodeStatus] = useState(null); // null | 'checking' | 'available' | 'taken'
+  const [codeStatus, setCodeStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [refs, setRefs] = useState(10);
   const codeTimer = useRef(null);
   const formRef = useRef(null);
+
+  const earning = refs * 1 + refs * 0.4 * 3 + refs * 0.15 * 5;
 
   function handleChange(e) {
     const { name, value } = e.target;
     const next = { ...form, [name]: value };
-
     if (name === 'code') {
       next.code = slugify(value).slice(0, 30);
       setCodeStatus(null);
@@ -75,7 +80,6 @@ function Affiliate() {
         codeTimer.current = setTimeout(() => checkCode(next.code), 600);
       }
     }
-
     setForm(next);
   }
 
@@ -110,82 +114,118 @@ function Affiliate() {
     }
   }
 
-  function scrollToForm() {
-    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   return (
-    <div className="aff-page">
+    <div className="aff">
 
-      {/* HERO */}
+      {/* ── HERO ── */}
       <section className="aff-hero">
+        <div className="aff-hero-bg" />
         <div className="aff-hero-inner">
-          <span className="s-eye">Programa de afiliados</span>
-          <h1 className="aff-hero-title">
-            Indique o CotaJá e<br />
-            <span className="grad-text">ganhe por cada conversão</span>
+          <span className="aff-hero-eyebrow">
+            <Star size={13} fill="currentColor" /> Programa de afiliados
+          </span>
+          <h1 className="aff-hero-h1">
+            Indique o CotaJá.<br />
+            <span className="aff-hero-highlight">Ganhe dinheiro de verdade.</span>
           </h1>
           <p className="aff-hero-sub">
-            Compartilhe seu link, acompanhe suas indicações e receba comissões toda vez
-            que alguém se cadastrar, abrir um pedido ou virar Premium.
+            Compartilhe seu link exclusivo e receba comissões a cada instalação,
+            pedido e assinatura Premium. Sem limite de ganhos.
           </p>
-          <div className="aff-hero-actions">
-            <button className="btn-primary" onClick={scrollToForm}>
+          <div className="aff-hero-btns">
+            <button className="aff-btn-cta" onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth' })}>
               Quero ser afiliado <ArrowRight size={16} />
             </button>
           </div>
-          <div className="aff-hero-pills">
-            <span><Check size={13} /> Gratuito para entrar</span>
+          <div className="aff-hero-trust">
+            <span><Check size={13} /> Grátis para entrar</span>
             <span><Check size={13} /> Pagamento via Pix</span>
-            <span><Check size={13} /> Sem limite de ganhos</span>
+            <span><Check size={13} /> Sem teto de comissões</span>
           </div>
         </div>
       </section>
 
-      {/* COMISSÕES */}
-      <section className="aff-commissions">
-        <div className="aff-section-inner">
-          <div className="aff-section-head reveal">
-            <span className="s-eye">Modelo de comissão</span>
-            <h2 className="s-title">Quanto você ganha?</h2>
-            <p className="s-sub">Três eventos, três formas de receber — acumuláveis na mesma indicação.</p>
-          </div>
-
-          <div className="aff-comm-grid">
+      {/* ── GANHE CARDS ── */}
+      <section className="aff-earn">
+        <div className="aff-container">
+          <div className="aff-earn-label reveal">Quanto você ganha por indicação</div>
+          <div className="aff-earn-grid">
             {COMMISSIONS.map((c) => (
               <div
-                key={c.event}
-                className={`aff-comm-card reveal${c.featured ? ' aff-comm-card--featured' : ''}`}
-                style={{ '--accent': c.color, '--accent-bg': c.bg }}
+                key={c.label}
+                className={`aff-earn-card reveal${c.featured ? ' aff-earn-card--featured' : ''}`}
+                style={{ '--grad': c.grad, '--color': c.color }}
               >
-                {c.featured && <span className="aff-comm-badge">Mais importante</span>}
-                <div className="aff-comm-icon">{c.icon}</div>
-                <div className="aff-comm-value">{c.value}</div>
-                <div className="aff-comm-event">{c.event}</div>
-                <p className="aff-comm-desc">{c.desc}</p>
+                {c.featured && <span className="aff-earn-badge">⚡ Mais rentável</span>}
+                <div className="aff-earn-card-top">
+                  <div className="aff-earn-icon">{c.icon}</div>
+                  <div className="aff-earn-value">
+                    <span className="aff-earn-main">{c.value}</span>
+                    <span className="aff-earn-cents">{c.cents}</span>
+                  </div>
+                </div>
+                <div className="aff-earn-label-card">{c.label}</div>
+                <p className="aff-earn-desc">{c.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="aff-comm-note reveal">
-            <DollarSign size={15} />
-            Uma mesma indicação pode gerar os 3 eventos — até <strong>R$ 9,00 por usuário</strong>.
+          <div className="aff-earn-max reveal">
+            <DollarSign size={18} />
+            <span>Uma indicação pode render até <strong>R$ 9,00</strong> — os 3 eventos são acumuláveis</span>
           </div>
         </div>
       </section>
 
-      {/* COMO FUNCIONA */}
+      {/* ── CALCULADORA ── */}
+      <section className="aff-calc">
+        <div className="aff-container">
+          <div className="aff-calc-inner reveal">
+            <div className="aff-calc-text">
+              <span className="s-eye">Simulador</span>
+              <h2 className="s-title">Quanto você pode ganhar?</h2>
+              <p className="s-sub">Arraste para simular com base no número de indicações por mês.</p>
+            </div>
+            <div className="aff-calc-card">
+              <div className="aff-calc-row">
+                <span className="aff-calc-metric">Indicações / mês</span>
+                <span className="aff-calc-num">{refs}</span>
+              </div>
+              <input
+                type="range"
+                min={1}
+                max={200}
+                value={refs}
+                onChange={(e) => setRefs(Number(e.target.value))}
+                className="aff-range"
+              />
+              <div className="aff-calc-breakdown">
+                <div><span>Instalações (100%)</span><strong>R$ {refs.toFixed(2)}</strong></div>
+                <div><span>Pedidos (~40%)</span><strong>R$ {(refs * 0.4 * 3).toFixed(2)}</strong></div>
+                <div><span>Premium (~15%)</span><strong>R$ {(refs * 0.15 * 5).toFixed(2)}</strong></div>
+              </div>
+              <div className="aff-calc-total">
+                <span>Estimativa mensal</span>
+                <strong>R$ {earning.toFixed(2)}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── COMO FUNCIONA ── */}
       <section className="aff-how">
-        <div className="aff-section-inner">
+        <div className="aff-container">
           <div className="aff-section-head reveal">
             <span className="s-eye">Como funciona</span>
-            <h2 className="s-title">Em 3 passos simples</h2>
+            <h2 className="s-title">3 passos para começar a ganhar</h2>
           </div>
-          <div className="aff-how-steps">
-            {HOW_STEPS.map((s) => (
-              <div key={s.n} className="aff-how-step reveal">
+          <div className="aff-how-grid">
+            {STEPS.map((s) => (
+              <div key={s.n} className="aff-how-card reveal">
                 <div className="aff-how-num">{s.n}</div>
-                <div className="aff-how-title">{s.title}</div>
+                <div className="aff-how-icon">{s.icon}</div>
+                <h3 className="aff-how-title">{s.title}</h3>
                 <p className="aff-how-desc">{s.desc}</p>
               </div>
             ))}
@@ -193,112 +233,81 @@ function Affiliate() {
         </div>
       </section>
 
-      {/* FORMULÁRIO */}
+      {/* ── FORMULÁRIO ── */}
       <section className="aff-form-section" ref={formRef} id="inscrever">
-        <div className="aff-section-inner">
-          <div className="aff-section-head reveal">
-            <span className="s-eye">Inscrição</span>
-            <h2 className="s-title">Comece agora</h2>
-            <p className="s-sub">Preencha abaixo. Nossa equipe revisa e você recebe a confirmação por e-mail.</p>
-          </div>
-
-          {submitted ? (
-            <div className="aff-success reveal">
-              <div className="aff-success-icon"><Check size={32} /></div>
-              <h3>Candidatura enviada!</h3>
-              <p>Entraremos em contato no e-mail informado em até 2 dias úteis.</p>
+        <div className="aff-container">
+          <div className="aff-form-wrap reveal">
+            <div className="aff-form-head">
+              <span className="s-eye" style={{ color: '#818cf8' }}>Inscrição gratuita</span>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1.2 }}>
+                Crie sua conta de afiliado
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+                Preencha abaixo. Aprovação em até 2 dias úteis.
+              </p>
             </div>
-          ) : (
-            <form className="aff-form reveal" onSubmit={handleSubmit}>
-              <div className="aff-form-row">
-                <label className="aff-label">
-                  Nome completo *
-                  <input
-                    type="text"
-                    name="name"
-                    className="aff-input"
-                    placeholder="Seu nome"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label className="aff-label">
-                  E-mail *
-                  <input
-                    type="email"
-                    name="email"
-                    className="aff-input"
-                    placeholder="seu@email.com"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
+
+            {submitted ? (
+              <div className="aff-success">
+                <div className="aff-success-icon"><Check size={28} /></div>
+                <h3>Candidatura enviada!</h3>
+                <p>Entraremos em contato no e-mail informado em até 2 dias úteis.</p>
               </div>
-
-              <div className="aff-form-row">
-                <label className="aff-label">
-                  Instagram (opcional)
-                  <div className="aff-input-prefix">
-                    <span>@</span>
-                    <input
-                      type="text"
-                      name="instagram"
-                      className="aff-input aff-input--prefixed"
-                      placeholder="seuarroba"
-                      value={form.instagram}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </label>
-                <label className="aff-label">
-                  Seu código exclusivo *
-                  <div className="aff-input-prefix">
-                    <span>cotaja.com/</span>
-                    <input
-                      type="text"
-                      name="code"
-                      className={`aff-input aff-input--prefixed${
-                        codeStatus === 'taken' ? ' aff-input--error' : codeStatus === 'available' ? ' aff-input--ok' : ''
-                      }`}
-                      placeholder="seucodigo"
-                      value={form.code}
-                      onChange={handleChange}
-                      required
-                      minLength={3}
-                    />
-                  </div>
-                  {codeStatus === 'checking' && <span className="aff-code-hint">Verificando...</span>}
-                  {codeStatus === 'available' && <span className="aff-code-hint aff-code-hint--ok"><Check size={12} /> Disponível!</span>}
-                  {codeStatus === 'taken' && <span className="aff-code-hint aff-code-hint--err">Código já em uso. Escolha outro.</span>}
-                </label>
-              </div>
-
-              {error && <p className="aff-form-error">{error}</p>}
-
-              <button
-                type="submit"
-                className="btn-primary aff-submit"
-                disabled={submitting || codeStatus === 'taken' || codeStatus === 'checking'}
-              >
-                {submitting ? 'Enviando...' : <>Enviar candidatura <ArrowRight size={16} /></>}
-              </button>
-            </form>
-          )}
+            ) : (
+              <form className="aff-form" onSubmit={handleSubmit}>
+                <div className="aff-form-row">
+                  <label className="aff-label">
+                    Nome completo *
+                    <input type="text" name="name" className="aff-input" placeholder="Seu nome" value={form.name} onChange={handleChange} required />
+                  </label>
+                  <label className="aff-label">
+                    E-mail *
+                    <input type="email" name="email" className="aff-input" placeholder="seu@email.com" value={form.email} onChange={handleChange} required />
+                  </label>
+                </div>
+                <div className="aff-form-row">
+                  <label className="aff-label">
+                    Instagram (opcional)
+                    <div className="aff-input-group">
+                      <span>@</span>
+                      <input type="text" name="instagram" className="aff-input aff-input--inner" placeholder="seuarroba" value={form.instagram} onChange={handleChange} />
+                    </div>
+                  </label>
+                  <label className="aff-label">
+                    Seu código exclusivo *
+                    <div className={`aff-input-group${codeStatus === 'taken' ? ' aff-input-group--err' : codeStatus === 'available' ? ' aff-input-group--ok' : ''}`}>
+                      <span>cotaja/</span>
+                      <input type="text" name="code" className="aff-input aff-input--inner" placeholder="seucodigo" value={form.code} onChange={handleChange} required minLength={3} />
+                    </div>
+                    {codeStatus === 'checking' && <span className="aff-hint">Verificando...</span>}
+                    {codeStatus === 'available' && <span className="aff-hint aff-hint--ok"><Check size={11} /> Disponível!</span>}
+                    {codeStatus === 'taken' && <span className="aff-hint aff-hint--err">Código já em uso.</span>}
+                  </label>
+                </div>
+                {error && <p className="aff-form-error">{error}</p>}
+                <button
+                  type="submit"
+                  className="aff-btn-submit"
+                  disabled={submitting || codeStatus === 'taken' || codeStatus === 'checking'}
+                >
+                  {submitting ? 'Enviando...' : <><TrendingUp size={16} /> Enviar candidatura</>}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* ── FAQ ── */}
       <section className="aff-faq">
-        <div className="aff-section-inner">
+        <div className="aff-container">
           <div className="aff-section-head reveal">
             <span className="s-eye">Dúvidas</span>
             <h2 className="s-title">Perguntas frequentes</h2>
           </div>
           <div className="aff-faq-grid">
             {FAQS.map((f) => (
-              <div key={f.q} className="aff-faq-item reveal">
+              <div key={f.q} className="aff-faq-card reveal">
                 <h4>{f.q}</h4>
                 <p>{f.a}</p>
               </div>
@@ -310,5 +319,3 @@ function Affiliate() {
     </div>
   );
 }
-
-export default Affiliate;
