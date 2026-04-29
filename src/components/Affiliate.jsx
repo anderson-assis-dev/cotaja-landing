@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Check, ArrowRight, Smartphone, ShoppingBag, Crown, TrendingUp, Users, DollarSign, Zap, Star } from 'lucide-react';
 import './Affiliate.css';
 
-const API = process.env.REACT_APP_API_URL || 'https://api.cotaja.com.br/api';
+const API = process.env.REACT_APP_API_URL || 'https://app.cotaja.io/api';
 
 const COMMISSIONS = [
   {
@@ -48,12 +48,19 @@ const FAQS = [
   { q: 'Os eventos são acumuláveis?', a: 'Sim! Uma única indicação pode gerar os 3 eventos — até R$ 9,00 por usuário.' },
 ];
 
+function onRevealEntries(entries) {
+  entries.forEach((entry, i) => {
+    if (!entry.isIntersecting) return;
+    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+  });
+}
+
 function slugify(str) {
   return str
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9]/g, '');
+    .replaceAll(/[̀-ͯ]/g, '')
+    .replaceAll(/[^a-z0-9]/g, '');
 }
 
 export default function Affiliate() {
@@ -66,7 +73,16 @@ export default function Affiliate() {
   const codeTimer = useRef(null);
   const formRef = useRef(null);
 
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(onRevealEntries, { threshold: 0.1 });
+    document.querySelectorAll('.aff .reveal').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   const earning = refs * 1 + refs * 0.4 * 3 + refs * 0.15 * 5;
+  let codeGroupMod = '';
+  if (codeStatus === 'taken') codeGroupMod = ' aff-input-group--err';
+  else if (codeStatus === 'available') codeGroupMod = ' aff-input-group--ok';
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -257,11 +273,11 @@ export default function Affiliate() {
               <form className="aff-form" onSubmit={handleSubmit}>
                 <div className="aff-form-row">
                   <label className="aff-label">
-                    Nome completo *
+                    <span>Nome completo *</span>
                     <input type="text" name="name" className="aff-input" placeholder="Seu nome" value={form.name} onChange={handleChange} required />
                   </label>
                   <label className="aff-label">
-                    E-mail *
+                    <span>E-mail *</span>
                     <input type="email" name="email" className="aff-input" placeholder="seu@email.com" value={form.email} onChange={handleChange} required />
                   </label>
                 </div>
@@ -274,8 +290,8 @@ export default function Affiliate() {
                     </div>
                   </label>
                   <label className="aff-label">
-                    Seu código exclusivo *
-                    <div className={`aff-input-group${codeStatus === 'taken' ? ' aff-input-group--err' : codeStatus === 'available' ? ' aff-input-group--ok' : ''}`}>
+                    <span>Seu código exclusivo *</span>
+                    <div className={`aff-input-group${codeGroupMod}`}>
                       <span>cotaja/</span>
                       <input type="text" name="code" className="aff-input aff-input--inner" placeholder="seucodigo" value={form.code} onChange={handleChange} required minLength={3} />
                     </div>
