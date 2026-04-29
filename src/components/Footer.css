@@ -49,6 +49,16 @@
 }
 .footer-col a:hover { color: var(--p1); }
 
+.footer-whatsapp {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  color: #25D366 !important;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.footer-whatsapp:hover { color: #1ebe57 !important; }
+
 .footer-bottom {
   max-width: 1200px;
   margin: 0 auto;

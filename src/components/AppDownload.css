@@ -1,0 +1,145 @@
+.app-download {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #eef2ff 0%, #ede9fe 100%);
+  overflow: hidden;
+}
+
+.app-download-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+}
+
+.app-download-text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.app-download-badges {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.app-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #111827;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-family: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+  min-width: 170px;
+}
+
+.app-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.app-badge svg { flex-shrink: 0; }
+
+.app-badge span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.app-badge span small {
+  font-size: 0.68rem;
+  font-weight: 400;
+  opacity: 0.75;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.app-badge.google { background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); }
+.app-badge.apple  { background: #111827; }
+
+/* decorative art */
+.app-download-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.app-download-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.app-download-circle-1 {
+  width: 340px;
+  height: 340px;
+  background: var(--p1);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.app-download-circle-2 {
+  width: 200px;
+  height: 200px;
+  background: var(--p2);
+  top: 10%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+}
+
+.app-download-phone {
+  width: 220px;
+  border-radius: 36px;
+  box-shadow: 0 32px 80px rgba(79, 70, 229, 0.22), 0 8px 24px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border: 8px solid #111827;
+  background: #111827;
+}
+
+.app-download-phone::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 8px;
+  background: #111827;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.app-download-screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 28px;
+}
+
+@media (max-width: 768px) {
+  .app-download-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .app-download-phone { width: 180px; }
+}
+
+@media (max-width: 480px) {
+  .app-download-badges { flex-direction: column; }
+  .app-badge { min-width: unset; }
+}

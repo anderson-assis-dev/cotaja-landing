@@ -5,11 +5,13 @@ import Hero from './components/Hero';
 import Categories from './components/Categories';
 import HowItWorks from './components/HowItWorks';
 import DualCTA from './components/DualCTA';
+import AppDownload from './components/AppDownload';
 import Footer from './components/Footer';
 import SearchResults from './components/SearchResults';
 import ProviderRegister from './components/ProviderRegister';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Affiliate from './components/Affiliate';
 import './styles/global.css';
 
 function Home() {
@@ -33,6 +35,7 @@ function Home() {
       <Categories />
       <HowItWorks />
       <DualCTA />
+      <AppDownload />
     </>
   );
 }
@@ -55,6 +58,7 @@ function App() {
           <Route path="/cadastro/prestador" element={<ProviderRegister />} />
           <Route path="/termos" element={<TermsOfUse />} />
           <Route path="/privacidade" element={<PrivacyPolicy />} />
+          <Route path="/afiliados" element={<Affiliate />} />
         </Routes>
       </main>
       <Footer />
