@@ -227,6 +227,7 @@ function AffiliateModal({ open, onClose }) {
 export default function Affiliate() {
   const [modalOpen, setModalOpen] = useState(false);
   const [bottomEmail, setBottomEmail] = useState('');
+  const [refs, setRefs] = useState(20);
 
   const openModal = useCallback(() => setModalOpen(true), []);
 
@@ -326,6 +327,48 @@ export default function Affiliate() {
             <button className="btn-primary" onClick={openModal}>
               Quero me inscrever <ArrowRight size={16} />
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SIMULADOR ── */}
+      <section className="af-sim-section">
+        <div className="af-sim-inner">
+          <div className="af-sim-text">
+            <span className="s-eye">Simulador</span>
+            <h2 className="s-title">Quanto você pode ganhar?</h2>
+            <p className="s-sub">
+              Ajuste o número de indicações por mês e veja a estimativa de ganhos.
+            </p>
+          </div>
+          <div className="af-sim-card">
+            <div className="af-sim-header">
+              <span className="af-sim-label">Indicações / mês</span>
+              <span className="af-sim-count">{refs}</span>
+            </div>
+            <input
+              type="range" min={1} max={200} value={refs}
+              onChange={(e) => setRefs(Number(e.target.value))}
+              className="af-range"
+            />
+            <div className="af-sim-breakdown">
+              <div className="af-sim-row">
+                <span>Instalações <small>(100%)</small></span>
+                <strong>R$ {(refs * 1).toFixed(2)}</strong>
+              </div>
+              <div className="af-sim-row">
+                <span>Primeiros pedidos <small>(~40%)</small></span>
+                <strong>R$ {(refs * 0.4 * 3).toFixed(2)}</strong>
+              </div>
+              <div className="af-sim-row">
+                <span>Prestadores Premium <small>(~15%)</small></span>
+                <strong>R$ {(refs * 0.15 * 5).toFixed(2)}</strong>
+              </div>
+            </div>
+            <div className="af-sim-total">
+              <span>Estimativa mensal</span>
+              <strong>R$ {(refs * 1 + refs * 0.4 * 3 + refs * 0.15 * 5).toFixed(2)}</strong>
+            </div>
           </div>
         </div>
       </section>
