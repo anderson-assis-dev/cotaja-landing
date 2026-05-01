@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useParams, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Categories from './components/Categories';
@@ -40,6 +40,14 @@ function Home() {
   );
 }
 
+function AffiliateRedirect() {
+  const { code } = useParams();
+  useEffect(() => {
+    if (code) localStorage.setItem('cotaja_ref', code.toLowerCase());
+  }, [code]);
+  return <Navigate to="/" replace />;
+}
+
 function ScrollToTop(){
   const { pathname, search }=useLocation();
   useEffect(()=>{window.scrollTo(0,0);},[pathname,search]);
@@ -59,6 +67,7 @@ function App() {
           <Route path="/termos" element={<TermsOfUse />} />
           <Route path="/privacidade" element={<PrivacyPolicy />} />
           <Route path="/afiliados" element={<Affiliate />} />
+          <Route path="/r/:code" element={<AffiliateRedirect />} />
         </Routes>
       </main>
       <Footer />

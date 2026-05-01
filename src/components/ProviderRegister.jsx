@@ -152,6 +152,7 @@ function RegisterModal({ open, onClose, initialEmail }) {
         mother_name: form.mother_name,
         birth_date: parseDateToISO(form.birth_date),
         service_categories: selectedCats.length ? JSON.stringify(selectedCats) : undefined,
+        ref_code: localStorage.getItem('cotaja_ref') || undefined,
       };
       const res = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',

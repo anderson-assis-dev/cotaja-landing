@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import './Navbar.css';
 import { getAppUrl } from '../utils/appLinks';
+import ClientRegisterModal from './ClientRegister';
 
 function Navbar() {
-  const appUrl=getAppUrl();
+  const appUrl = getAppUrl();
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = useCallback(() => setModalOpen(true), []);
+  const closeModal = useCallback(() => setModalOpen(false), []);
+
   return (
     <nav className="navbar">
       <div className="nav-inner">
@@ -19,9 +24,11 @@ function Navbar() {
 
         <div className="nav-actions">
           <a href={appUrl} target="_blank" rel="noopener noreferrer" className="nav-link-plain">Entrar</a>
-          <a href={appUrl} target="_blank" rel="noopener noreferrer" className="nav-cta">Criar conta</a>
+          <button type="button" className="nav-cta" onClick={openModal}>Criar conta</button>
         </div>
       </div>
+
+      {modalOpen && <ClientRegisterModal open={modalOpen} onClose={closeModal} />}
     </nav>
   );
 }
