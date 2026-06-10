@@ -12,20 +12,20 @@ const COMMISSIONS = [
   {
     icon: <Smartphone size={22} />,
     title: 'Instalação validada',
-    value: 'R$ 1,00',
+    value: 'R$ 0,50',
     desc: 'Por cada pessoa que baixar o app e completar o cadastro pelo seu link.',
   },
   {
     icon: <ShoppingBag size={22} />,
     title: 'Primeiro pedido aberto',
-    value: 'R$ 3,00',
+    value: 'R$ 1,50',
     desc: 'Quando o cliente indicado criar o primeiro pedido de serviço na plataforma.',
     featured: true,
   },
   {
     icon: <Crown size={22} />,
     title: 'Prestador vira Premium',
-    value: 'R$ 5,00',
+    value: 'R$ 2,50',
     desc: 'Quando um prestador que você indicou assinar o plano Premium.',
   },
 ];
@@ -47,7 +47,7 @@ const FAQS = [
   { q: 'Quando recebo o pagamento?', a: 'Pagamentos são processados mensalmente via Pix para a chave cadastrada, desde que o saldo aprovado seja de pelo menos R$ 20,00.' },
   { q: 'Tem limite de indicações?', a: 'Não existe limite. Quanto mais você indica, mais você ganha — sem teto de comissões.' },
   { q: 'Preciso ser usuário do app?', a: 'Não. Criadores de conteúdo, influenciadores e qualquer pessoa pode se inscrever como afiliado, independentemente de usar o app.' },
-  { q: 'Os eventos são acumuláveis?', a: 'Sim! Uma única indicação pode gerar os 3 eventos — instalação, primeiro pedido e Premium — rendendo até R$ 9,00 por usuário indicado.' },
+  { q: 'Os eventos são acumuláveis?', a: 'Sim! Uma única indicação pode gerar os 3 eventos — instalação, primeiro pedido e Premium — rendendo até R$ 4,50 por usuário indicado.' },
   { q: 'Como acompanho minhas indicações?', a: 'Após aprovação você recebe acesso ao painel de afiliado, onde visualiza cliques, conversões e saldo em tempo real.' },
 ];
 
@@ -266,7 +266,7 @@ export default function Affiliate() {
       <section className="af-stats">
         <div className="af-stats-inner">
           <div>
-            <div className="af-stat-val">R$ 9,00</div>
+            <div className="af-stat-val">R$ 4,50</div>
             <div className="af-stat-label">por indicação completa</div>
           </div>
           <div>
@@ -301,7 +301,7 @@ export default function Affiliate() {
           </div>
           <div className="af-comm-note">
             <DollarSign size={15} />
-            Uma indicação completa rende até <strong>R$ 9,00</strong> — os 3 eventos são acumuláveis
+            Uma indicação completa rende até <strong>R$ 4,50</strong> — os 3 eventos são acumuláveis
           </div>
         </div>
       </section>
@@ -354,20 +354,20 @@ export default function Affiliate() {
             <div className="af-sim-breakdown">
               <div className="af-sim-row">
                 <span>Instalações <small>(100%)</small></span>
-                <strong>R$ {(refs * 1).toFixed(2)}</strong>
+                <strong>R$ {(refs * 0.5).toFixed(2)}</strong>
               </div>
               <div className="af-sim-row">
                 <span>Primeiros pedidos <small>(~40%)</small></span>
-                <strong>R$ {(refs * 0.4 * 3).toFixed(2)}</strong>
+                <strong>R$ {(refs * 0.4 * 1.5).toFixed(2)}</strong>
               </div>
               <div className="af-sim-row">
                 <span>Prestadores Premium <small>(~15%)</small></span>
-                <strong>R$ {(refs * 0.15 * 5).toFixed(2)}</strong>
+                <strong>R$ {(refs * 0.15 * 2.5).toFixed(2)}</strong>
               </div>
             </div>
             <div className="af-sim-total">
               <span>Estimativa mensal</span>
-              <strong>R$ {(refs * 1 + refs * 0.4 * 3 + refs * 0.15 * 5).toFixed(2)}</strong>
+              <strong>R$ {(refs * 0.5 + refs * 0.4 * 1.5 + refs * 0.15 * 2.5).toFixed(2)}</strong>
             </div>
           </div>
         </div>
