@@ -12,6 +12,7 @@ import ProviderRegister from './components/ProviderRegister';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Affiliate from './components/Affiliate';
+import RendaExtra from './components/RendaExtra';
 import './styles/global.css';
 
 function Home() {
@@ -67,6 +68,7 @@ function App() {
           <Route path="/termos" element={<TermsOfUse />} />
           <Route path="/privacidade" element={<PrivacyPolicy />} />
           <Route path="/afiliados" element={<Affiliate />} />
+          <Route path="/renda-extra" element={<RendaExtra />} />
           <Route path="/r/:code" element={<AffiliateRedirect />} />
         </Routes>
       </main>
