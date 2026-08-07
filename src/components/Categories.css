@@ -77,14 +77,48 @@
 .cat-deco-1 { width: 120px; height: 120px; top: -30px; right: -30px; }
 .cat-deco-2 { width: 80px; height: 80px; bottom: -20px; right: 60px; }
 
-/* Small category chips row */
-.cat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 12px;
+/* Small category chips carousel */
+.cat-carousel {
+  position: relative;
 }
 
+.cat-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  padding: 4px 2px 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cat-grid::-webkit-scrollbar { display: none; }
+
+.cat-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  transition: background 0.2s, transform 0.15s;
+}
+.cat-carousel-btn:hover { background: var(--p1); color: #fff; }
+.cat-carousel-btn-prev { left: -6px; }
+.cat-carousel-btn-next { right: -6px; }
+
 .cat-chip {
+  flex: 0 0 130px;
+  scroll-snap-align: start;
   background: #fff;
   font-family: inherit;
   border: 1px solid var(--border);
@@ -122,5 +156,6 @@
 
 @media (max-width: 600px) {
   .cat-featured { grid-template-columns: 1fr; }
-  .cat-grid { grid-template-columns: repeat(3, 1fr); }
+  .cat-chip { flex-basis: 104px; }
+  .cat-carousel-btn { display: none; }
 }

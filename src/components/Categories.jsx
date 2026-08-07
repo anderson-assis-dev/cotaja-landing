@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  ChevronRight, Zap, Layers, Cpu, Hammer, Paintbrush, Droplets,
+  ChevronRight, ChevronLeft, Zap, Layers, Cpu, Hammer, Paintbrush, Droplets,
   Package, Wind, Wrench, Monitor, Briefcase, Sparkles, PenTool,
   Palette, Shield, ShieldCheck, LayoutGrid, KeyRound, Cake, Leaf,
   Home, Scissors, Thermometer, Camera, Settings, HardHat, Waves,
@@ -81,14 +81,19 @@ function resolveIcon(label) {
 function Categories() {
   const navigate = useNavigate();
   const [chips, setChips] = useState([]);
+  const trackRef = useRef(null);
 
   const go = (label) => navigate(`/buscar?q=${encodeURIComponent(label)}`);
+
+  const scrollByAmount = (dir) => {
+    trackRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     let active = true;
     (async () => {
       try {
-        const res = await fetch(`${API_URL}/api/providers/categories?limit=24`);
+        const res = await fetch(`${API_URL}/providers/categories`);
         const json = await res.json();
         const list = Array.isArray(json?.data) && json.success ? json.data : [];
         if (active) setChips(list.map((c) => ({ label: c.label, ...resolveIcon(c.label) })));
@@ -119,18 +124,38 @@ function Categories() {
         ))}
       </div>
 
-      <div className="cat-grid">
-        {chips.map((c) => {
-          const Icon = c.icon;
-          return (
-            <button key={c.label} className="cat-chip" onClick={() => go(c.label)}>
-              <div className="cat-chip-icon" style={{ background: c.bg }}>
-                <Icon size={22} color={c.color} strokeWidth={1.75} />
-              </div>
-              <span className="cat-chip-label">{c.label}</span>
-            </button>
-          );
-        })}
+      <div className="cat-carousel">
+        <button
+          type="button"
+          className="cat-carousel-btn cat-carousel-btn-prev"
+          onClick={() => scrollByAmount(-1)}
+          aria-label="Categorias anteriores"
+        >
+          <ChevronLeft size={18} />
+        </button>
+
+        <div className="cat-grid" ref={trackRef}>
+          {chips.map((c) => {
+            const Icon = c.icon;
+            return (
+              <button key={c.label} className="cat-chip" onClick={() => go(c.label)}>
+                <div className="cat-chip-icon" style={{ background: c.bg }}>
+                  <Icon size={22} color={c.color} strokeWidth={1.75} />
+                </div>
+                <span className="cat-chip-label">{c.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          className="cat-carousel-btn cat-carousel-btn-next"
+          onClick={() => scrollByAmount(1)}
+          aria-label="Próximas categorias"
+        >
+          <ChevronRight size={18} />
+        </button>
       </div>
     </section>
   );
