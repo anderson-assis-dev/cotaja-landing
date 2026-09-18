@@ -7,7 +7,6 @@
   overflow: hidden;
   text-align: center;
 }
-
 .af-hero::before {
   content: '';
   position: absolute;
