@@ -29,6 +29,11 @@ import OrderDetail from './app/client/OrderDetail';
 import RateProvider from './app/client/RateProvider';
 import FindProviders from './app/client/FindProviders';
 import ProviderProfile from './app/client/ProviderProfile';
+import ProviderVisibility from './app/provider/ProviderVisibility';
+import AvailableDemands from './app/provider/AvailableDemands';
+import DemandDetail from './app/provider/DemandDetail';
+import MyServices from './app/provider/MyServices';
+import MyProposals from './app/provider/MyProposals';
 import { REF_STORAGE_KEY } from './utils/api';
 import './styles/global.css';
 
@@ -131,6 +136,7 @@ function App() {
               <Route index element={<AppHome />} />
               <Route path="perfil" element={<Profile />} />
               <Route path="perfil/tipo" element={<ProfileType />} />
+              <Route path="visibilidade" element={<ProviderVisibility />} />
               <Route path="buscar" element={<FindProviders />} />
               <Route path="profissionais/:uuid" element={<ProviderProfile />} />
               <Route path="pedidos/novo" element={<CreateOrder />} />
@@ -138,6 +144,10 @@ function App() {
               <Route path="avaliar/:providerId" element={<RateProvider />} />
               <Route path="pedidos" element={<MyOrders />} />
               <Route path="pedidos/:id" element={<OrderDetail />} />
+              <Route path="demandas" element={<AvailableDemands />} />
+              <Route path="demandas/:id" element={<DemandDetail />} />
+              <Route path="servicos" element={<MyServices />} />
+              <Route path="propostas" element={<MyProposals />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

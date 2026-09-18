@@ -137,7 +137,8 @@
   color: var(--brand);
 }
 
-.chip-on {
+.chip-on,
+.chip-on:hover {
   border-color: var(--brand);
   background: var(--brand);
   color: #fff;
