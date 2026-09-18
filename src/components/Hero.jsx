@@ -3,13 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Star, ShieldCheck, Zap } from 'lucide-react';
 import './Hero.css';
 
+const QUICK_SEARCHES = ['Limpeza', 'Elétrica', 'Pintura', 'Hidráulica'];
+
 function Hero() {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
+  const goToSearch = (term) => {
+    navigate(term ? `/buscar?q=${encodeURIComponent(term)}` : '/buscar');
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(query.trim() ? `/buscar?q=${encodeURIComponent(query.trim())}` : '/buscar');
+    goToSearch(query.trim());
   };
 
   return (
@@ -39,6 +45,15 @@ function Hero() {
           />
           <button type="submit" className="hero-search-btn">Buscar</button>
         </form>
+
+        <div className="hero-quick">
+          <span className="hero-quick-label">Buscas frequentes</span>
+          {QUICK_SEARCHES.map((term) => (
+            <button key={term} type="button" className="hero-quick-chip" onClick={() => goToSearch(term)}>
+              {term}
+            </button>
+          ))}
+        </div>
 
         <div className="hero-trust">
           <div className="hero-trust-item">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   DollarSign, Users, Clock, Shield, TrendingUp, Smartphone,
   ChevronDown, ArrowRight, Star, Zap, Eye, EyeOff,
@@ -6,8 +7,8 @@ import {
 } from 'lucide-react';
 import './ProviderRegister.css';
 import './HowItWorks.css';
-
-const API_URL = process.env.REACT_APP_API_URL || 'https://app.cotaja.io';
+import { apiGet, apiPost, REF_STORAGE_KEY } from '../utils/api';
+import { formatCpfCnpj, formatDate, formatPhone, normalizePhone, onlyDigits, parseDateToISO } from '../utils/format';
 
 const BENEFITS = [
   { icon: <DollarSign size={22} />, title: 'Renda extra garantida', desc: 'Receba propostas de clientes próximos a você e aumente seu faturamento.' },
@@ -45,39 +46,10 @@ function FaqItem({ q, a }) {
   );
 }
 
-const formatPhone = (v) => {
-  const d = v.replaceAll(/\D/g, '').slice(0, 11);
-  if (d.length <= 2) return d;
-  if (d.length <= 7) return `(${d.slice(0,2)}) ${d.slice(2)}`;
-  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
-};
-
-const formatCpf = (v) => {
-  const d = v.replaceAll(/\D/g, '').slice(0, 14);
-  if (d.length <= 3) return d;
-  if (d.length <= 6) return `${d.slice(0,3)}.${d.slice(3)}`;
-  if (d.length <= 9) return `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6)}`;
-  if (d.length <= 11) return `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6,9)}-${d.slice(9)}`;
-  if (d.length <= 12) return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5,8)}/${d.slice(8)}`;
-  return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5,8)}/${d.slice(8,12)}-${d.slice(12)}`;
-};
-
-const formatDate = (v) => {
-  const d = v.replaceAll(/\D/g, '').slice(0, 8);
-  if (d.length <= 2) return d;
-  if (d.length <= 4) return `${d.slice(0,2)}/${d.slice(2)}`;
-  return `${d.slice(0,2)}/${d.slice(2,4)}/${d.slice(4)}`;
-};
-
-const parseDateToISO = (ddmmyyyy) => {
-  const parts = ddmmyyyy.split('/');
-  if (parts.length !== 3 || parts[2].length < 4) return ddmmyyyy;
-  return `${parts[2]}-${parts[1]}-${parts[0]}`;
-};
-
 const EMPTY_FORM = { name: '', email: '', phone: '', password: '', confirmPassword: '', cpf: '', mother_name: '', birth_date: '' };
 
 function RegisterModal({ open, onClose, initialEmail }) {
+  const navigate = useNavigate();
   const dialogRef = useRef(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [categories, setCategories] = useState([]);
@@ -93,9 +65,8 @@ function RegisterModal({ open, onClose, initialEmail }) {
   }, [initialEmail]);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/providers/categories?limit=60`)
-      .then(r => r.json())
-      .then(j => { if (j.success && Array.isArray(j.data)) setCategories(j.data.map(c => c.label)); })
+    apiGet('/api/providers/categories?limit=60')
+      .then(data => { if (Array.isArray(data)) setCategories(data.map(c => c.label)); })
       .catch(() => {});
   }, []);
 
@@ -122,7 +93,7 @@ function RegisterModal({ open, onClose, initialEmail }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'phone') { setForm(f => ({ ...f, phone: formatPhone(value) })); return; }
-    if (name === 'cpf') { setForm(f => ({ ...f, cpf: formatCpf(value) })); return; }
+    if (name === 'cpf') { setForm(f => ({ ...f, cpf: formatCpfCnpj(value) })); return; }
     if (name === 'birth_date') { setForm(f => ({ ...f, birth_date: formatDate(value) })); return; }
     setForm(f => ({ ...f, [name]: value }));
   };
@@ -144,26 +115,19 @@ function RegisterModal({ open, onClose, initialEmail }) {
       const payload = {
         name: form.name,
         email: form.email,
-        phone: form.phone.replaceAll(/\D/g, ''),
+        phone: normalizePhone(form.phone),
         password: form.password,
         password_confirmation: form.confirmPassword,
         profile_type: 'provider',
-        cpf: form.cpf.replaceAll(/\D/g, '') || undefined,
+        cpf: onlyDigits(form.cpf) || undefined,
         mother_name: form.mother_name,
         birth_date: parseDateToISO(form.birth_date),
-        service_categories: selectedCats.length ? JSON.stringify(selectedCats) : undefined,
-        ref_code: localStorage.getItem('cotaja_ref') || undefined,
+        service_categories: selectedCats.length ? selectedCats : undefined,
+        ref_code: localStorage.getItem(REF_STORAGE_KEY) || undefined,
       };
-      const res = await fetch(`${API_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const json = await res.json();
+      const json = await apiPost('/api/auth/register', payload);
       if (json.success) {
-        setResult({ ok: true, msg: json.message });
-        setForm(EMPTY_FORM);
-        setSelectedCats([]);
+        navigate(`/ativar-conta?email=${encodeURIComponent(form.email.trim())}`);
       } else {
         setResult({ ok: false, msg: json.message || 'Erro ao criar conta. Tente novamente.' });
       }

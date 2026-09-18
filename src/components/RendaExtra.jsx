@@ -6,8 +6,9 @@ import {
 } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Link } from 'react-router-dom';
 import './RendaExtra.css';
-import { getAppUrl, APPLE_APP_URL, GOOGLE_PLAY_URL } from '../utils/appLinks';
+import { APPLE_APP_URL, GOOGLE_PLAY_URL } from '../utils/appLinks';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://app.cotaja.io';
 const STRIPE_PK = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || '';
@@ -246,16 +247,14 @@ function CheckoutFlow({ initialEmail }) {
     }
   };
 
-  const appUrl = getAppUrl();
-
   if (success) {
     return (
       <div className="re-success">
         <div className="re-success-icon"><Crown size={40} /></div>
         <h3>{success.alreadyPremium ? 'Você já é Premium!' : 'Premium ativado! 🎉'}</h3>
         <p>
-          Sua conta de profissional está <strong>ativa e Premium</strong>. Baixe o app do CotaJá,
-          faça login com seu e-mail e senha e comece a aparecer na frente da concorrência agora mesmo.
+          Sua conta de profissional está <strong>ativa e Premium</strong>. Entre pelo site ou baixe o app
+          do CotaJá, faça login com seu e-mail e senha e comece a aparecer na frente da concorrência agora mesmo.
         </p>
         <div className="re-store-row">
           <a href={APPLE_APP_URL} target="_blank" rel="noopener noreferrer" className="re-store-btn">
@@ -265,9 +264,9 @@ function CheckoutFlow({ initialEmail }) {
             <Play size={18} /> Google Play
           </a>
         </div>
-        <a href={appUrl} target="_blank" rel="noopener noreferrer" className="re-cta-btn re-cta-gold" style={{ marginTop: 14 }}>
-          <ArrowRight size={18} /> Abrir o app
-        </a>
+        <Link to="/entrar" className="re-cta-btn re-cta-gold" style={{ marginTop: 14 }}>
+          <ArrowRight size={18} /> Entrar pelo site
+        </Link>
       </div>
     );
   }

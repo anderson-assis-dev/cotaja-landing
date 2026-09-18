@@ -338,6 +338,7 @@
 .sr-empty-icon { font-size: 3rem; margin-bottom: 12px; }
 .sr-empty-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
 .sr-empty-sub { font-size: 0.88rem; }
+.sr-empty-cta { margin-top: 24px; }
 
 @media (max-width: 500px) {
   .sr-grid { grid-template-columns: 1fr; }

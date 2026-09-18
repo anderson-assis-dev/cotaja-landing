@@ -1,41 +1,97 @@
-import React, { useState, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { LayoutDashboard, Menu, X } from 'lucide-react';
 import './Navbar.css';
-import { getAppUrl } from '../utils/appLinks';
-import ClientRegisterModal from './ClientRegister';
+import { BRAND_NAME, LOGO_SRC } from '../utils/brand';
+import { useAuth } from '../contexts/AuthContext';
+
+const NAV_LINKS = [
+  { href: '/#como-funciona', label: 'Como funciona' },
+  { href: '/#categorias', label: 'Categorias' },
+  { href: '/#prestadores', label: 'Para prestadores' },
+];
 
 function Navbar() {
-  const appUrl = getAppUrl();
   const { pathname } = useLocation();
+  const { isAuthenticated } = useAuth();
   const hideActions = pathname === '/renda-extra';
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = useCallback(() => setModalOpen(true), []);
-  const closeModal = useCallback(() => setModalOpen(false), []);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   return (
     <nav className="navbar">
       <div className="nav-inner">
-        <a href="/" className="logo">
-          <img className="logo-img" src="/assets/images/cotaja-logo.png" alt="CotaJá" />
-        </a>
+        <Link to="/" className="logo" aria-label={`${BRAND_NAME} — página inicial`}>
+          <img className="logo-img" src={LOGO_SRC} alt={BRAND_NAME} />
+        </Link>
 
         {!hideActions && (
           <>
             <ul className="nav-links">
-              <li><a href="#como-funciona">Como funciona</a></li>
-              <li><a href="#categorias">Categorias</a></li>
-              <li><a href="#prestadores">Para prestadores</a></li>
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
             </ul>
 
             <div className="nav-actions">
-              <a href={appUrl} target="_blank" rel="noopener noreferrer" className="nav-link-plain">Entrar</a>
-              <button type="button" className="nav-cta" onClick={openModal}>Criar conta</button>
+              {isAuthenticated ? (
+                <Link to="/app" className="nav-cta">
+                  <LayoutDashboard size={17} />
+                  Minha conta
+                </Link>
+              ) : (
+                <>
+                  <Link to="/entrar" className="nav-link-plain">Entrar</Link>
+                  <Link to="/criar-conta" className="nav-cta">Criar conta</Link>
+                </>
+              )}
             </div>
+
+            <button
+              type="button"
+              className="nav-burger"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </>
         )}
       </div>
 
-      {modalOpen && <ClientRegisterModal open={modalOpen} onClose={closeModal} />}
+      {menuOpen && !hideActions && (
+        <div className="nav-drawer">
+          <ul>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+          <div className="nav-drawer-actions">
+            {isAuthenticated ? (
+              <Link to="/app" className="btn-primary">Ir para minha conta</Link>
+            ) : (
+              <>
+                <Link to="/entrar" className="btn-outline">Entrar</Link>
+                <Link to="/criar-conta" className="btn-primary">Criar conta</Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

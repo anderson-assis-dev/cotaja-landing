@@ -8,8 +8,8 @@ import {
   Building2, Dumbbell, Truck, TreePine, Star,
 } from 'lucide-react';
 import './Categories.css';
-
-const API_URL = process.env.REACT_APP_API_URL || 'https://app.cotaja.io';
+import { apiGet } from '../utils/api';
+import { FALLBACK_CATEGORY_LABELS } from '../data/categories';
 
 const FEATURED = [
   {
@@ -78,9 +78,11 @@ function resolveIcon(label) {
   return FALLBACK_STYLES[idx];
 }
 
+const toChips = (labels) => labels.map((label) => ({ label, ...resolveIcon(label) }));
+
 function Categories() {
   const navigate = useNavigate();
-  const [chips, setChips] = useState([]);
+  const [chips, setChips] = useState(() => toChips(FALLBACK_CATEGORY_LABELS));
   const trackRef = useRef(null);
 
   const go = (label) => navigate(`/buscar?q=${encodeURIComponent(label)}`);
@@ -93,12 +95,11 @@ function Categories() {
     let active = true;
     (async () => {
       try {
-        const res = await fetch(`${API_URL}/providers/categories`);
-        const json = await res.json();
-        const list = Array.isArray(json?.data) && json.success ? json.data : [];
-        if (active) setChips(list.map((c) => ({ label: c.label, ...resolveIcon(c.label) })));
+        const data = await apiGet('/api/providers/categories');
+        const labels = Array.isArray(data) ? data.map((c) => c.label).filter(Boolean) : [];
+        if (active && labels.length) setChips(toChips(labels));
       } catch {
-        if (active) setChips([]);
+        // mantém as categorias de reserva
       }
     })();
     return () => { active = false; };
@@ -106,7 +107,12 @@ function Categories() {
 
   return (
     <section className="categories" id="categorias">
-      <h2 className="categories-title">O que você precisa?</h2>
+      <div className="categories-head">
+        <h2 className="categories-title">O que você precisa?</h2>
+        <button type="button" className="categories-all" onClick={() => navigate('/buscar')}>
+          Ver todos os prestadores <ChevronRight size={15} />
+        </button>
+      </div>
 
       <div className="cat-featured">
         {FEATURED.map((f) => (

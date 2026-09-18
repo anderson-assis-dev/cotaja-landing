@@ -100,6 +100,40 @@
 }
 .hero-search-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
+.hero-quick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.hero-quick-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted2);
+  margin-right: 4px;
+}
+
+.hero-quick-chip {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 15px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.hero-quick-chip:hover {
+  border-color: var(--p1);
+  color: var(--p1);
+  background: var(--brand-50);
+}
+
 .hero-trust {
   display: flex;
   justify-content: center;

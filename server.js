@@ -8,8 +8,9 @@ const PORT = process.env.PORT || 53001;
 app.use(compression());
 app.use(express.static(path.join(__dirname, 'build'), { maxAge: '30d' }));
 
-// SPA fallback — qualquer rota não encontrada serve o index.html do React
-app.get('*', (req, res) => {
+// SPA fallback — qualquer rota não encontrada serve o index.html do React.
+// No Express 5, app.get('*') derruba o servidor; app.use cobre todas as rotas.
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 

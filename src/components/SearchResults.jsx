@@ -2,9 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Search, Star, ArrowLeft, X, Briefcase, CheckCircle2, Zap, MapPin, Loader2 } from 'lucide-react';
 import './SearchResults.css';
-import { getAppUrl } from '../utils/appLinks';
-
-const API_URL=process.env.REACT_APP_API_URL||'https://app.cotaja.io';
+import { apiGet } from '../utils/api';
 
 function Avatar({ provider }) {
   if (provider.avatar_base64) {
@@ -55,7 +53,6 @@ function ProviderCard({ provider }) {
 
 function ProviderModal({ open, onClose, provider, details, loading }) {
   if (!open) return null;
-  const appUrl=getAppUrl();
   return (
     <div className="sr-modal-backdrop" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="sr-modal">
@@ -132,7 +129,9 @@ function ProviderModal({ open, onClose, provider, details, loading }) {
               </div>
             )}
           </div>
-          <a className="sr-modal-cta" href={appUrl} target="_blank" rel="noopener noreferrer">Quero contratar no app</a>
+          {provider?.uuid && (
+            <Link className="sr-modal-cta" to={`/app/profissionais/${provider.uuid}`}>Quero contratar</Link>
+          )}
         </div>
       </div>
     </div>
@@ -157,9 +156,8 @@ export default function SearchResults() {
       const params = new URLSearchParams();
       if (q) params.set('q', q);
       if (city) params.set('city', city);
-      const res = await fetch(`${API_URL}/api/providers/search?${params}`);
-      const json = await res.json();
-      setProviders(json.success ? json.data : []);
+      const data = await apiGet(`/api/providers/search?${params}`);
+      setProviders(Array.isArray(data) ? data : []);
     } catch {
       setProviders([]);
     } finally {
@@ -221,9 +219,7 @@ export default function SearchResults() {
     setModalOpen(true);
     setDetailsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/providers/${p.uuid}/public`);
-      const json = await res.json();
-      setProviderDetails(json.success ? json.data : null);
+      setProviderDetails(await apiGet(`/api/providers/${p.uuid}/public`));
     } catch {
       setProviderDetails(null);
     } finally {
@@ -312,6 +308,7 @@ export default function SearchResults() {
             <div className="sr-empty-icon">🔍</div>
             <div className="sr-empty-title">Nenhum prestador encontrado</div>
             <div className="sr-empty-sub">Tente uma categoria diferente ou deixe em branco para ver todos.</div>
+            <Link to="/cadastro/prestador" className="btn-primary sr-empty-cta">Seja um prestador</Link>
           </div>
         )}
 

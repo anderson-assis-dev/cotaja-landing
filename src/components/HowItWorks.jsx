@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Zap } from 'lucide-react';
 import './HowItWorks.css';
-import { getAppUrl } from '../utils/appLinks';
+import { useAuth } from '../contexts/AuthContext';
 
 const STEPS = [
   {
@@ -22,7 +23,7 @@ const STEPS = [
 ];
 
 function HowItWorks() {
-  const appUrl=getAppUrl();
+  const { isAuthenticated } = useAuth();
   return (
     <section className="how reveal" id="como-funciona">
       <div className="how-inner">
@@ -43,10 +44,10 @@ function HowItWorks() {
         </div>
 
         <div className="how-cta">
-          <a href={appUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+          <Link to={isAuthenticated ? '/app/pedidos/novo' : '/criar-conta'} className="btn-primary">
             <Zap size={16} />
             Solicitar serviço agora
-          </a>
+          </Link>
         </div>
       </div>
     </section>

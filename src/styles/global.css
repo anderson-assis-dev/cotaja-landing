@@ -10,6 +10,39 @@
   --text: #111827;
   --muted: #6b7280;
   --muted2: #9ca3af;
+  --text-soft: #374151;
+  --border-strong: #d4d4d8;
+
+  /* Escala da marca e de erro usada pelo app */
+  --brand-900: #312e81;
+  --brand-800: #3730a3;
+  --brand-700: #4338ca;
+  --brand: #4f46e5;
+  --brand-300: #a5b4fc;
+  --brand-100: #e0e7ff;
+  --brand-50: #eef2ff;
+
+  --danger-700: #b91c1c;
+  --danger: #dc2626;
+  --danger-400: #f87171;
+  --danger-100: #fee2e2;
+  --danger-50: #fef2f2;
+
+  --grad-brand: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+  --grad-deep: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
+
+  --shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.06);
+  --shadow-sm: 0 2px 8px rgba(17, 24, 39, 0.06);
+  --shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+  --shadow-brand: 0 12px 32px rgba(79, 70, 229, 0.2);
+
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,6 +54,8 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
 }
+
+button, input, select, textarea { font-family: inherit; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -63,3 +98,35 @@ body {
 .s-sub { color: var(--muted); font-size: 0.97rem; line-height: 1.7; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+:focus-visible { outline: 3px solid var(--brand-300); outline-offset: 2px; }
+
+.btn-primary,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: opacity 0.2s, transform 0.15s, border-color 0.2s;
+}
+
+.btn-primary {
+  background: var(--grad);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-outline {
+  background: #fff;
+  color: var(--p1);
+  border: 2px solid var(--brand-100);
+}
+.btn-outline:hover { border-color: var(--p1); transform: translateY(-1px); }

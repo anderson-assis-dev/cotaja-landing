@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import { getAppUrl } from '../utils/appLinks';
 
 const socials = [
   {
@@ -23,7 +22,6 @@ const socials = [
 ];
 
 function Footer() {
-  const appUrl=getAppUrl();
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -38,10 +36,11 @@ function Footer() {
 
         <div className="footer-col">
           <h4>Plataforma</h4>
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#categorias">Categorias</a>
-          <a href="#prestadores">Para prestadores</a>
-          <a href={appUrl} target="_blank" rel="noopener noreferrer">Acessar app</a>
+          <a href="/#como-funciona">Como funciona</a>
+          <a href="/#categorias">Categorias</a>
+          <a href="/#prestadores">Para prestadores</a>
+          <Link to="/buscar">Buscar prestadores</Link>
+          <Link to="/app">Acessar app</Link>
         </div>
 
         <div className="footer-col">
