@@ -23,6 +23,8 @@ import Register from './app/auth/Register';
 import ActivateAccount from './app/auth/ActivateAccount';
 import Profile from './app/account/Profile';
 import ProfileType from './app/account/ProfileType';
+import Wallet from './app/account/Wallet';
+import Premium from './app/account/Premium';
 import CreateOrder from './app/client/CreateOrder';
 import MyOrders from './app/client/MyOrders';
 import OrderDetail from './app/client/OrderDetail';
@@ -34,6 +36,7 @@ import AvailableDemands from './app/provider/AvailableDemands';
 import DemandDetail from './app/provider/DemandDetail';
 import MyServices from './app/provider/MyServices';
 import MyProposals from './app/provider/MyProposals';
+import AcceptedOrder from './app/order/AcceptedOrder';
 import { REF_STORAGE_KEY } from './utils/api';
 import './styles/global.css';
 
@@ -136,6 +139,8 @@ function App() {
               <Route index element={<AppHome />} />
               <Route path="perfil" element={<Profile />} />
               <Route path="perfil/tipo" element={<ProfileType />} />
+              <Route path="carteira" element={<Wallet />} />
+              <Route path="premium" element={<Premium />} />
               <Route path="visibilidade" element={<ProviderVisibility />} />
               <Route path="buscar" element={<FindProviders />} />
               <Route path="profissionais/:uuid" element={<ProviderProfile />} />
@@ -144,9 +149,11 @@ function App() {
               <Route path="avaliar/:providerId" element={<RateProvider />} />
               <Route path="pedidos" element={<MyOrders />} />
               <Route path="pedidos/:id" element={<OrderDetail />} />
+              <Route path="pedidos/:id/andamento" element={<AcceptedOrder />} />
               <Route path="demandas" element={<AvailableDemands />} />
               <Route path="demandas/:id" element={<DemandDetail />} />
               <Route path="servicos" element={<MyServices />} />
+              <Route path="servicos/:id/andamento" element={<AcceptedOrder />} />
               <Route path="propostas" element={<MyProposals />} />
             </Route>
 

@@ -69,6 +69,32 @@ npm run build
 6. **E-mail** — Preview do e-mail de proposta aceita
 7. **CTA** — Links App Store + Google Play
 
+## 🖥️ App web (área logada)
+
+Além da landing, o site traz o app web do CotaJá, ligado à mesma API do app mobile. O código fica em `src/app` (telas), `src/services` (chamadas à API), `src/contexts` (login e avisos) e `src/utils` (API, marca e formatação).
+
+### Variáveis de ambiente
+
+| Variável | Descrição |
+| --- | --- |
+| `REACT_APP_API_URL` | URL base da API (padrão `https://app.cotaja.io`). Pode vir com ou sem `/api` no fim. |
+| `REACT_APP_STRIPE_PUBLISHABLE_KEY` | Chave pública do Stripe, usada na carteira, no Premium e na página Renda Extra. |
+| `PORT` | Porta do `server.js` (padrão `53001`). |
+
+### Rotas
+
+| Rota | Tela |
+| --- | --- |
+| `/entrar`, `/criar-conta`, `/ativar-conta` | Login, cadastro (cliente ou prestador) e ativação por código |
+| `/app` | Início do cliente ou do prestador |
+| `/app/perfil`, `/app/perfil/tipo` | Dados, senha, notificações e tipo de perfil |
+| `/app/carteira`, `/app/premium` | Cartões (Stripe) e assinatura Premium |
+| `/app/pedidos`, `/app/pedidos/novo`, `/app/pedidos/:id` | Pedidos do cliente e propostas recebidas |
+| `/app/buscar`, `/app/profissionais/:uuid`, `/app/avaliar/:providerId` | Busca, perfil do prestador e avaliação |
+| `/app/demandas`, `/app/demandas/:id`, `/app/propostas`, `/app/servicos` | Demandas, propostas e serviços do prestador |
+| `/app/visibilidade` | Painel profissional (Premium) |
+| `/app/pedidos/:id/andamento`, `/app/servicos/:id/andamento` | Chat, agendamento, rastreio e código de segurança |
+
 ## 🔗 Deploy sugerido
 
 ```bash
