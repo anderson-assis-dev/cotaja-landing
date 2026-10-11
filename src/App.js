@@ -11,6 +11,7 @@ import SearchResults from './components/SearchResults';
 import ProviderRegister from './components/ProviderRegister';
 import TermsOfUse from './components/TermsOfUse';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Receipt from './components/Receipt';
 import Affiliate from './components/Affiliate';
 import RendaExtra from './components/RendaExtra';
 import { AuthProvider } from './contexts/AuthContext';
@@ -123,6 +124,7 @@ function App() {
               <Route path="/renda-extra" element={<RendaExtra />} />
             </Route>
 
+            <Route path="/comprovante/:codigo" element={<Receipt />} />
             <Route path="/entrar" element={<Login />} />
             <Route path="/criar-conta" element={<Register />} />
             <Route path="/ativar-conta" element={<ActivateAccount />} />
